@@ -138,7 +138,7 @@
                 "id_token"
       ],
       "redirectUris": [
-                "http://_CSGHUB_DOMAINNAME:_CSGHUB_DOMAINPORT/api/v1/callback/casdoor",
+                "http://10.0.2.15:80/api/v1/callback/casdoor",
                 "http://localhost:9000/callback"
       ],
       "tokenFormat": "JWT",
