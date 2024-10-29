@@ -5,5 +5,5 @@ import (
 )
 
 func registerHomeRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	engine.GET("/", handlersRegistry.RenderHandler.ModelHandler.List)
+	engine.GET("/", handlersRegistry.RenderHandler.DatasetHandler.List)
 }

@@ -121,19 +121,19 @@
                 target="_blank">
                 <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a> -->
-              <a v-if="hasEmail"
+              <!-- <a v-if="hasEmail"
                  href="/models/new">
                 <el-dropdown-item divided>
                   + {{ $t('navbar.newModel') }}
                 </el-dropdown-item>
-              </a>
+              </a> -->
               <a v-if="hasEmail"
                  href="/datasets/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newDataset') }}
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <!-- <a v-if="hasEmail"
                  href="/codes/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newCode') }}
@@ -150,7 +150,7 @@
                 <el-dropdown-item>
                   + {{ $t('navbar.newCollection') }}
                 </el-dropdown-item>
-              </a>
+              </a> -->
               <a v-if="hasEmail"
                  href="/organizations/new">
                 <el-dropdown-item divided>

@@ -192,36 +192,36 @@
   const popperClass = 'popper-submenu'
 
   const items = ref([
-    {
-      title: t('navbar.models'),
-      index: '/models',
-      class: menuItemClass,
-      style: 'border:none',
-    },
+    // {
+    //   title: t('navbar.models'),
+    //   index: '/models',
+    //   class: menuItemClass,
+    //   style: 'border:none',
+    // },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none',
     },
-    {
-      title: t('navbar.spaces'),
-      index: '/spaces',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('navbar.codes'),
-      index: '/codes',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('collections.collection'),
-      index: '/collections',
-      class: menuItemClass,
-      style: 'border:none',
-    },
+    // {
+    //   title: t('navbar.spaces'),
+    //   index: '/spaces',
+    //   class: menuItemClass,
+    //   style: 'border:none',
+    // },
+    // {
+    //   title: t('navbar.codes'),
+    //   index: '/codes',
+    //   class: menuItemClass,
+    //   style: 'border:none',
+    // },
+    // {
+    //   title: t('collections.collection'),
+    //   index: '/collections',
+    //   class: menuItemClass,
+    //   style: 'border:none',
+    // },
   ])
 </script>
 
