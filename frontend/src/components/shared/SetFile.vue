@@ -1,0 +1,116 @@
+<template>
+  <div class="flex flex-col gap-4 my-[30px] md:px-5">
+    <div class="flex items-center gap-[10px]">
+      <div class="whitespace-nowrap">{{ $t('repo.set.label') }}</div>
+      <el-input
+        v-model="label"
+        :maxLength="200"
+        show-word-limit
+        clearable
+        class="w-[380px] h-[40px] text-gray-500"
+      />
+    </div>
+    <div class="flex items-center gap-[10px]">
+      <div class="whitespace-nowrap">{{ $t('repo.set.path') }}</div>
+      <el-input
+        v-model="path"
+        :maxLength="200"
+        show-word-limit
+        clearable
+        class="w-[380px] h-[40px] text-gray-500"
+      />
+    </div>
+    <div>
+      <el-button
+        type="primary"
+        @click="submit"
+        >{{ $t('repo.set.submit') }}</el-button
+      >
+      <el-button @click="cancel">{{ $t('repo.set.cancel') }}</el-button>
+    </div>
+  </div>
+</template>
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
+  import { ElMessage } from 'element-plus'
+
+  const props = defineProps({
+    repoName: String,
+    namespacePath: String,
+    currentPath: String,
+    currentBranch: String
+  })
+
+  const label = ref('')
+  const path = ref('')
+
+const getSet = () => {
+    console.log('getSet')
+    // try {
+    //   const { data, error } = await useFetchApi(
+    //     `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}`
+    //   ).json()
+
+    //   console.log('res', data, error)
+
+    //   if (!error.value) {
+    //     const result = data.value
+    //     label.value = result.data.label
+    //     path.value = result.data[annotation_path]
+    //   } else {
+    //     ElMessage({ message: error.value.msg, type: 'error' })
+    //   }
+    // } catch (err) {
+    //   ElMessage({ message: err.message, type: 'error' })
+    // }
+  }
+
+  const redirectToFilePreview = () => {
+    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+  }
+
+  const cancel = () => {
+    redirectToFilePreview()
+  }
+
+  const submit = async () => {
+    console.log('submit', label.value, path.value)
+
+    const params = {
+      label: label.value,
+      annotation_path: path.value,
+    }
+    const options = {
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    }
+    try {
+      const { data, error } = await useFetchApi(
+        `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}`, options
+      ).post().json()
+
+      console.log('res', data, error)
+
+      if (!error.value) {
+        ElMessage({ message: '修改成功', type: 'success' })
+        redirectToFilePreview()
+      } else {
+        ElMessage({ message: error.value.msg, type: 'error' })
+      }
+    } catch (err) {
+      ElMessage({ message: err.message, type: 'error' })
+    }
+  }
+
+  onMounted(() => {
+    getSet()
+  })
+</script>
+
+<style scoped>
+  :deep(.el-radio__label) {
+    color: #303133 !important;
+    font-weight: 400;
+  }
+</style>

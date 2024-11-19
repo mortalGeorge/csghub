@@ -27,6 +27,15 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <div
+        class="flex items-center gap-1"
+      >
+        <SvgIcon name="edit" />
+        <a
+          :href="`/${prefixPath}/${namespacePath}/set/${currentBranch}/${currentPath}`"
+          >{{ $t('shared.set') }}</a
+        >
+      </div>
       <div class="flex items-center text-sm text-gray-500">
         <div class="flex items-center py-[1px] md:hidden">
           <el-avatar

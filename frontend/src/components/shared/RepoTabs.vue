@@ -107,6 +107,17 @@
       </template>
       <template
         #files
+        v-if="actionName === 'set_file'"
+      >
+        <set-file
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :repo-name="repoDetail.name"
+          :namespace-path="path"
+        />
+      </template>
+      <template
+        #files
         v-if="actionName === 'upload_file'"
       >
         <upload-file
@@ -257,6 +268,7 @@
   import NewFile from '../shared/NewFile.vue'
   import Blob from '../shared/Blob.vue'
   import EditFile from '../shared/EditFile.vue'
+  import SetFile from '../shared/SetFile.vue'
   import InitializeGuide from '../application_spaces/InitializeGuide.vue'
   import ApplicationPage from '../application_spaces/ApplicationPage.vue'
   import StoppedPage from '../application_spaces/StoppedPage.vue'

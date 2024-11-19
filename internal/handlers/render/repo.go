@@ -102,6 +102,10 @@ func (b *BaseHandlerImpl) EditFile(ctx *gin.Context) {
 	b.renderShow(ctx, "edit_file", "files")
 }
 
+func (b *BaseHandlerImpl) SetFile(ctx *gin.Context) {
+	b.renderShow(ctx, "set_file", "files")
+}
+
 func (b *BaseHandlerImpl) Settings(ctx *gin.Context) {
 	b.renderShow(ctx, "settings", "settings")
 }

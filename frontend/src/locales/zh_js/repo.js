@@ -16,5 +16,11 @@ export const repo = {
     remoteResource: "OpenCSG 远端资源",
     syncCompleted: "本地版本与远端源版本一致",
     needSync: "远端有待同步版本",
+  },
+  set: {
+    label: "数据标签",
+    path: "标注文件路径",
+    submit: "确定",
+    cancel: "取消",
   }
 }

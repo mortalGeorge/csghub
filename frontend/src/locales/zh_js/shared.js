@@ -17,5 +17,6 @@ export const shared = {
   preview: "预览",
   edit: "编辑",
   likes: "收藏",
-  hasLikes: "已收藏"
+  hasLikes: "已收藏",
+  set: "设置"
 }
