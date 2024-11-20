@@ -66,7 +66,7 @@
     </div>
     <div class="text-[12px] flex items-center h-[25px]">
       <div style="width: 80px;">{{ $t('repo.set.path') }}</div>
-      <div class="ml-4">{{ path }}</div>
+      <div class="ml-4" @click="handleJump">{{ path }}</div>
     </div>
     <div
       v-if="lastCommit"
@@ -366,6 +366,10 @@
     } catch (err) {
       ElMessage({ message: err.message, type: 'error' })
     }
+  }
+
+  const handleJump = () => {
+    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${path.value}`
   }
 
   const lfsDownload = async () => {
