@@ -46,6 +46,7 @@ type BaseHandler interface {
 	NewFile(ctx *gin.Context)
 	UploadFile(ctx *gin.Context)
 	EditFile(ctx *gin.Context)
+	SetFile(ctx *gin.Context)
 	Settings(ctx *gin.Context)
 	Billing(ctx *gin.Context)
 	Logs(ctx *gin.Context)

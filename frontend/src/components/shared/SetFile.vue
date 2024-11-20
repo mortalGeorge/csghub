@@ -42,28 +42,30 @@
     currentBranch: String
   })
 
+  const prefixPath = document.location.pathname.split('/')[1]
+
   const label = ref('')
   const path = ref('')
 
 const getSet = () => {
     console.log('getSet')
-    // try {
-    //   const { data, error } = await useFetchApi(
-    //     `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}`
-    //   ).json()
+    try {
+      const { data, error } = await useFetchApi(
+        `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}?ref=${props.currentBranch}`
+      ).json()
 
-    //   console.log('res', data, error)
+      console.log('getres', data, error)
 
-    //   if (!error.value) {
-    //     const result = data.value
-    //     label.value = result.data.label
-    //     path.value = result.data[annotation_path]
-    //   } else {
-    //     ElMessage({ message: error.value.msg, type: 'error' })
-    //   }
-    // } catch (err) {
-    //   ElMessage({ message: err.message, type: 'error' })
-    // }
+      if (!error.value) {
+        const result = data.value
+        label.value = result.data.label
+        path.value = result.data[annotation_path]
+      } else {
+        ElMessage({ message: error.value.msg, type: 'error' })
+      }
+    } catch (err) {
+      ElMessage({ message: err.message, type: 'error' })
+    }
   }
 
   const redirectToFilePreview = () => {
@@ -87,10 +89,10 @@ const getSet = () => {
     }
     try {
       const { data, error } = await useFetchApi(
-        `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}`, options
+        `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}?ref=${props.currentBranch}`, options
       ).post().json()
 
-      console.log('res', data, error)
+      console.log('postres', data, error)
 
       if (!error.value) {
         ElMessage({ message: '修改成功', type: 'success' })

@@ -27,15 +27,6 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div
-        class="flex items-center gap-1"
-      >
-        <SvgIcon name="edit" />
-        <a
-          :href="`/${prefixPath}/${namespacePath}/set/${currentBranch}/${currentPath}`"
-          >{{ $t('shared.set') }}</a
-        >
-      </div>
       <div class="flex items-center text-sm text-gray-500">
         <div class="flex items-center py-[1px] md:hidden">
           <el-avatar
@@ -57,6 +48,25 @@
           {{ $t('all.commits') }}
         </a>
       </div>
+    </div>
+    <!-- 新增的文件标注信息设置模块 -->
+    <div class="text-[12px] flex items-center justify-start">
+      <div class="gap-1">{{ $t('shared.fileInfoTitle') }}</div>
+      <div class="flex items-center gap-1">
+        <SvgIcon name="edit" />
+        <a
+          :href="`/${prefixPath}/${namespacePath}/set/${currentBranch}/${currentPath}`"
+          >{{ $t('shared.set') }}</a
+        >
+      </div>
+    </div>
+    <div class="text-[12px] flex items-center gap-[10px]">
+      <div class="whitespace-nowrap">{{ $t('repo.set.label') }}</div>
+      <div class="ml-3">{{ label }}</div>
+    </div>
+    <div class="text-[12px] flex items-center gap-[10px]">
+      <div class="whitespace-nowrap">{{ $t('repo.set.path') }}</div>
+      <div class="ml-3">{{ path }}</div>
     </div>
     <div
       v-if="lastCommit"
@@ -246,6 +256,8 @@
   const size = ref(0)
   const content = ref('')
   const lastCommit = ref({})
+  const label = ref('')
+  const path = ref('')
 
   const prefixPath = document.location.pathname.split('/')[1]
 
@@ -332,6 +344,27 @@
     } catch (err) {
       console.error(err)
       location.href = '/errors/not-found'
+    }
+  }
+
+  const getSet = () => {
+    console.log('getSetBlob')
+    try {
+      const { data, error } = await useFetchApi(
+        `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}?ref=${props.currentBranch}`
+      ).json()
+
+      console.log('getres', data, error)
+
+      if (!error.value) {
+        const result = data.value
+        label.value = result.data.label
+        path.value = result.data[annotation_path]
+      } else {
+        ElMessage({ message: error.value.msg, type: 'error' })
+      }
+    } catch (err) {
+      ElMessage({ message: err.message, type: 'error' })
     }
   }
 

@@ -18,5 +18,6 @@ export const shared = {
   edit: "编辑",
   likes: "收藏",
   hasLikes: "已收藏",
-  set: "设置"
+  set: "设置",
+  fileInfoTitle: "文件标注信息",
 }
