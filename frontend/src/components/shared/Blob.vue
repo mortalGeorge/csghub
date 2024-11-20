@@ -359,7 +359,7 @@
       if (!error.value) {
         const result = data.value
         label.value = result?.data?.label || ''
-        path.value = result?.data?.[annotation_path] || ''
+        path.value = result?.data?.['annotation_path'] || ''
       } else {
         ElMessage({ message: error.value.msg, type: 'error' })
       }
