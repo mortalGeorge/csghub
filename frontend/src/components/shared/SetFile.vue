@@ -47,7 +47,7 @@
   const label = ref('')
   const path = ref('')
 
-const getSet = () => {
+const getSet = async() => {
     console.log('getSet')
     try {
       const { data, error } = await useFetchApi(

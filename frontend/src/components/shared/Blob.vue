@@ -347,7 +347,7 @@
     }
   }
 
-  const getSet = () => {
+  const getSet = async() => {
     console.log('getSetBlob')
     try {
       const { data, error } = await useFetchApi(
@@ -390,5 +390,6 @@
 
   onMounted(() => {
     fetchFileContent()
+    getSet()
   })
 </script>
