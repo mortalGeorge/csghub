@@ -50,9 +50,9 @@
       </div>
     </div>
     <!-- 新增的文件标注信息设置模块 -->
-    <div class="text-[12px] flex items-center justify-start">
-      <div class="gap-1">{{ $t('shared.fileInfoTitle') }}</div>
-      <div class="flex items-center gap-1">
+    <div class="text-[12px] flex items-center justify-start mt-4 mb-2">
+      <div class="text-[14px] text-gray-700">{{ $t('shared.fileInfoTitle') }}</div>
+      <div class="flex items-center gap-1 border border-gray-200 ml-4 h-[30px] w-[60px] justify-center">
         <SvgIcon name="edit" />
         <a
           :href="`/${prefixPath}/${namespacePath}/set/${currentBranch}/${currentPath}`"
@@ -60,13 +60,13 @@
         >
       </div>
     </div>
-    <div class="text-[12px] flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ $t('repo.set.label') }}</div>
-      <div class="ml-3">{{ label }}</div>
+    <div class="text-[12px] flex items-center h-[25px]">
+      <div style="width: 80px;">{{ $t('repo.set.label') }}</div>
+      <div class="ml-4">{{ label }}</div>
     </div>
-    <div class="text-[12px] flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ $t('repo.set.path') }}</div>
-      <div class="ml-3">{{ path }}</div>
+    <div class="text-[12px] flex items-center h-[25px]">
+      <div style="width: 80px;">{{ $t('repo.set.path') }}</div>
+      <div class="ml-4">{{ path }}</div>
     </div>
     <div
       v-if="lastCommit"
@@ -358,8 +358,8 @@
 
       if (!error.value) {
         const result = data.value
-        label.value = result.data.label
-        path.value = result.data[annotation_path]
+        label.value = result?.data?.label || ''
+        path.value = result?.data?.[annotation_path] || ''
       } else {
         ElMessage({ message: error.value.msg, type: 'error' })
       }

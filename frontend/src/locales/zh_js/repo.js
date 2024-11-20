@@ -21,6 +21,6 @@ export const repo = {
     label: "数据标签",
     path: "标注文件路径",
     submit: "确定",
-    cancel: "取消",
+    cancel: "返回",
   }
 }

@@ -1,26 +1,26 @@
 <template>
-  <div class="flex flex-col gap-4 my-[30px] md:px-5">
-    <div class="flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ $t('repo.set.label') }}</div>
+  <div class="flex flex-col gap-4 my-[30px] md:px-5 text-[14px]">
+    <div class="flex items-center">
+      <div class="w-[100px]">{{ $t('repo.set.label') }}</div>
       <el-input
         v-model="label"
         :maxLength="200"
         show-word-limit
         clearable
-        class="w-[380px] h-[40px] text-gray-500"
+        class="w-[380px] h-[40px] text-gray-500 ml-4"
       />
     </div>
-    <div class="flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ $t('repo.set.path') }}</div>
+    <div class="flex items-center">
+      <div class="w-[100px]">{{ $t('repo.set.path') }}</div>
       <el-input
         v-model="path"
         :maxLength="200"
         show-word-limit
         clearable
-        class="w-[380px] h-[40px] text-gray-500"
+        class="w-[380px] h-[40px] text-gray-500 ml-4"
       />
     </div>
-    <div>
+    <div class="mt-4">
       <el-button
         type="primary"
         @click="submit"
@@ -58,8 +58,8 @@ const getSet = async() => {
 
       if (!error.value) {
         const result = data.value
-        label.value = result.data.label
-        path.value = result.data[annotation_path]
+        label.value = result?.data?.label || ''
+        path.value = result?.data?.[annotation_path] || ''
       } else {
         ElMessage({ message: error.value.msg, type: 'error' })
       }
@@ -69,7 +69,7 @@ const getSet = async() => {
   }
 
   const redirectToFilePreview = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${props.currentPath}`
   }
 
   const cancel = () => {
