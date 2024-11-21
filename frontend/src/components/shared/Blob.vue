@@ -66,7 +66,7 @@
     </div>
     <div class="text-[12px] flex items-center h-[25px]">
       <div style="width: 80px;">{{ $t('repo.set.path') }}</div>
-      <div class="ml-4" @click="handleJump">{{ path }}</div>
+      <div class="ml-4 cursor-pointer" style="color: #1677ff;" @click="handleJump">{{ path }}</div>
     </div>
     <div
       v-if="lastCommit"
@@ -342,13 +342,11 @@
         location.href = '/errors/not-found'
       }
     } catch (err) {
-      console.error(err)
       location.href = '/errors/not-found'
     }
   }
 
   const getSet = async() => {
-    console.log('getSetBlob')
     try {
       const { data, error } = await useFetchApi(
         `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}?ref=${props.currentBranch}`

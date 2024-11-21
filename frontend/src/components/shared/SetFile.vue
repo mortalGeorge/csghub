@@ -48,7 +48,6 @@
   const path = ref('')
 
 const getSet = async() => {
-    console.log('getSet')
     try {
       const { data, error } = await useFetchApi(
         `/${prefixPath}/${props.namespacePath}/clabel/${props.currentPath}?ref=${props.currentBranch}`
@@ -77,8 +76,6 @@ const getSet = async() => {
   }
 
   const submit = async () => {
-    console.log('submit', label.value, path.value)
-
     const params = {
       label: label.value,
       annotation_path: path.value,

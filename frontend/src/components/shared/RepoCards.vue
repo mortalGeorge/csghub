@@ -52,7 +52,7 @@
           </span>
         </h3>
         <div class="xl:mt-[16px]">
-          <el-select
+          <!-- <el-select
             v-if="onPremise === 'true'"
             v-model="sourceSelection"
             @change="filterChange"
@@ -66,18 +66,27 @@
               :label="item.label"
               :value="item.value"
             />
-          </el-select>
+          </el-select> -->
           <ElInput
             v-model="nameFilterInput"
             class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change="filterChange"
+            @change="filterChange()"
+          />
+          <!-- 按照标签搜索文件 -->
+          <ElInput
+            v-model="fileSearch"
+            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
+            size="large"
+            :placeholder="$t('datasets.filePlaceholder')"
+            :prefix-icon="Search"
+            @change="filterChange()"
           />
           <el-select
             v-model="sortSelection"
-            @change="filterChange"
+            @change="filterChange()"
             style="width: 150px"
             class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
             size="large"
@@ -102,12 +111,22 @@
         />
       </div>
       <div
-        v-else
+        v-else-if="!!reposData.length"
         class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
       >
         <repo-item
           v-for="repo in reposData"
           :repo="repo"
+          :repo-type="repoType"
+        />
+      </div>
+      <div
+        v-else-if="!!filesData.lebgth"
+        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
+      >
+        <file-item
+          v-for="file in filesData"
+          :file="file"
           :repo-type="repoType"
         />
       </div>
@@ -126,6 +145,7 @@
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
+  import FileItem from '../shared/FileItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue'
   import CsgPagination from './CsgPagination.vue'
@@ -163,8 +183,9 @@
   const languageTags = ref([])
   const licenseTags = ref([])
   const nameFilterInput = ref('')
+  const fileSearch = ref('')
   const sortSelection = ref('trending')
-  const sourceSelection = ref('all')
+  const sourceSelection = ref('local')
   const currentPage = ref(1)
   const totalRepos = ref(0)
   const taskTag = ref('')
@@ -172,6 +193,7 @@
   const languageTag = ref('')
   const licenseTag = ref('')
   const reposData = ref(Array)
+  const filesData = ref(Array)
   const sortOptions = [
     {
       value: 'trending',
@@ -226,11 +248,12 @@
     reloadRepos(1)
   }
 
+  // 增加文件搜索判断
   const reloadRepos = (childCurrent) => {
     if(childCurrent){
       currentPage.value = childCurrent
     }
-    let url = `/${props.repoType}s`
+    let url = fileSearch.value ? '/cmcc/files' : `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
@@ -240,11 +263,17 @@
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
-    loadRepos(url)
+    if (!!fileSearch.value) {
+      url = url + `&file_search=${fileSearch.value}`
+      loadFiles(url)
+    } else {
+      loadRepos(url)
+    }
   }
 
   async function loadRepos(url) {
     const { error, data } = await useFetchApi(url).json()
+    console.log('file', data, error)
     if (!data.value) {
       ElMessage({
         message: error.value.msg || t('all.fetchError'),
@@ -252,6 +281,21 @@
       })
     } else {
       reposData.value = data.value.data
+      filesData.value = []
+      totalRepos.value = data.value.total
+    }
+  }
+
+  async function loadFiles(url) {
+    const { error, data } = await useFetchApi(url).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      reposData.value = []
+      filesData.value = data.value.data
       totalRepos.value = data.value.total
     }
   }

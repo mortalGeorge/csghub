@@ -1,6 +1,7 @@
 export const datasets = {
   title: "数据集",
   placeholder: "数据集名字",
+  filePlaceholder: "文件标签",
   downloadDataset: "下载数据集",
   datasetName: "数据集名称",
   datasetNameTips: "应用于数据集路径，创建后不可更改",
