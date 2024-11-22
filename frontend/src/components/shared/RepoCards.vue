@@ -113,7 +113,7 @@
         />
       </div>
       <div
-        v-else-if="!!reposData.length"
+        v-else-if="!!reposData?.length"
         class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
       >
         <repo-item
@@ -123,7 +123,7 @@
         />
       </div>
       <div
-        v-else-if="!!filesData.length"
+        v-else-if="!!filesData?.length"
         class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
       >
         <file-item
