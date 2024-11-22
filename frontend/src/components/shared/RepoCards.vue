@@ -280,7 +280,7 @@ async function loadRepos(url) {
     console.log('repo', data, error)
     if (!data.value) {
       ElMessage({
-        message: error.value.msg || t('all.fetchError'),
+        message: t('all.fetchError'),
         type: 'warning'
       })
     } else {
@@ -296,7 +296,7 @@ async function loadRepos(url) {
     console.log('file', data, error)
     if (!data.value) {
       ElMessage({
-        message: error.value.msg || t('all.fetchError'),
+        message: t('all.fetchError'),
         type: 'warning'
       })
     } else {
