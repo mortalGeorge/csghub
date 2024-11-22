@@ -255,7 +255,7 @@
     if(childCurrent){
       currentPage.value = childCurrent
     }
-    let url = fileSearch.value ? '/cmcc/files' : `/${props.repoType}s`
+    let url = fileSearch.value ? '/datasets/cmcc/files' : `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
