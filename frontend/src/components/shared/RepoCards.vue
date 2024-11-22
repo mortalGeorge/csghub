@@ -69,7 +69,8 @@
           </el-select> -->
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
+            class="!w-[220px] mr-[20px] xl:!w-[160px] sm:!w-[calc(100%-400px)] sm:mr-1"
+            style="width: 220px"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -78,7 +79,8 @@
           <!-- 按照标签搜索文件 -->
           <ElInput
             v-model="fileSearch"
-            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
+            class="!w-[220px] mr-[20px] xl:!w-[160px] sm:!w-[calc(100%-400px)] sm:mr-1"
+            style="width: 220px"
             size="large"
             :placeholder="$t('datasets.filePlaceholder')"
             :prefix-icon="Search"
@@ -263,6 +265,7 @@
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
+    console.log('url', url, nameFilterInput.value, fileSearch.value)
     if (!!fileSearch.value) {
       url = url + `&file_search=${fileSearch.value}`
       loadFiles(url)
@@ -271,9 +274,10 @@
     }
   }
 
-  async function loadRepos(url) {
+async function loadRepos(url) {
+    console.log('loadRepos')
     const { error, data } = await useFetchApi(url).json()
-    console.log('file', data, error)
+    console.log('repo', data, error)
     if (!data.value) {
       ElMessage({
         message: error.value.msg || t('all.fetchError'),
@@ -287,7 +291,9 @@
   }
 
   async function loadFiles(url) {
+    console.log('loadFiles')
     const { error, data } = await useFetchApi(url).json()
+    console.log('file', data, error)
     if (!data.value) {
       ElMessage({
         message: error.value.msg || t('all.fetchError'),

@@ -8,9 +8,9 @@
       <div :class="`${repoType}-path`"
            class="text-md text-gray-700 font-normal text-ellipsis overflow-hidden whitespace-nowrap"
       >
-        {{ getComputed.path }}
+        {{ file.path }}
       </div>
-      <div class="flex gap-1">
+      <!-- <div class="flex gap-1">
         <el-tooltip
           effect="light"
           :content="$t('file.source.needSync')"
@@ -25,18 +25,18 @@
         >
           <SvgIcon v-if="!!sourceIcon && !needSyncIcon" :name="sourceIcon" />
         </el-tooltip>
-      </div>
+      </div> -->
     </div>
 
-    <p v-if="getComputed.showDescription"
+    <p
       class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-1 text-gray-500 text-sm overflow-hidden text-ellipsis line-clamp-2 text-left"
       :class="isCollection ? 'hidden' : ''"
      >
-      {{ file.description }}
+      {{ file.label }}
     </p>
 
     <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-gray-500">
-      <span v-if="getComputed.taskTag"
+      <!-- <span v-if="getComputed.taskTag"
             class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
       >
             {{ getComputed.taskTag }}
@@ -44,20 +44,20 @@
 
       <span v-if="getComputed.taskTag">
         <SvgIcon name="vertical_divider" />
-      </span>
+      </span> -->
 
       <div class="overflow-hidden text-ellipsis whitespace-nowrap">
-        {{$t('all.lastTime')}}：{{ file.updated_at.substring(0, 10) }}
+        {{$t('repo.set.path')}}：{{ file['annotation_path'] }}
       </div>
 
-      <template v-if="getComputed.visibility">
+      <!-- <template v-if="getComputed.visibility">
         <span> <SvgIcon name="vertical_divider" /> </span>
         <span class="visibility-label">{{ getComputed.visibility }}</span>
       </template>
 
       <span> <SvgIcon name="vertical_divider" /> </span>
 
-      <span class="whitespace-nowrap">{{$t('all.downloadCount')}}：{{ file.downloads }}</span>
+      <span class="whitespace-nowrap">{{$t('all.downloadCount')}}：{{ file.downloads }}</span> -->
     </div>
   </a>
 </template>
@@ -83,7 +83,7 @@
       case 'model':
         return `/models/${props.file.path}`
       case 'dataset':
-        return `/datasets/${props.file.path}`
+        return `/datasets/${props.file[`repo_namespace`]}/${props.file[`repo_name`]}/blob/${props.file.ref}/${props.file.path}`
       case 'space':
         return `/spaces/${props.file.path}`
       case 'code':
@@ -91,49 +91,6 @@
       default:
         return ''
     }
-  })
-
-  const sourceIcon = computed(() => {
-    if (props.file.source !== 'opencsg') return ''
-    
-    return props.file.sync_status === 'completed' 
-      ? 'repo_opencsg_completed' 
-      : 'repo_opencsg_sync'
-  })
-
-  const needSyncIcon = computed(() => {
-    if (props.file.source !== 'opencsg') return ''
-
-    return props.file.sync_status !== 'completed'
-      && !!props.file.repository.http_clone_url
-      ? 'repo_opencsg_need_sync'
-      : ''
-  })
-
-  const syncTooltip = computed(() => {
-    if (props.file.source !== 'opencsg') return ''
-
-    return props.file.sync_status === 'completed'
-      ? t('file.source.syncCompleted')
-      : t('file.source.remoteResource')
-  })
-
-  const getComputed = computed(() => {
-    const displayName = props.file.nickname !== undefined && props.file.nickname.trim().length > 0 ? props.file.nickname : props.file.name
-    const path = props.file.path.split('/')[0] + '/' + displayName
-
-    const visibility = props.file.private ? t('all.private') : ''
-    const showDescription = props.cardType === 'index' || !!props.file.description?.trim()
-
-    let taskTag = (props.file.tags || []).find(tag => tag.category === "task")
-    if (locale.value === 'en') {
-      taskTag = taskTag? taskTag["name"].replace(/-/g, ' ') : null
-    }
-    else {
-      taskTag = taskTag? taskTag["show_name"] : null
-    }
-
-    return { path, visibility, taskTag, showDescription }
   })
 </script>
 
