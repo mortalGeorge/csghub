@@ -47,7 +47,7 @@
       </span> -->
 
       <div class="overflow-hidden text-ellipsis whitespace-nowrap">
-        {{$t('repo.set.path')}}：{{ file['annotation_path'] }}
+        {{$t('datasets.datasetName')}}：{{ file['repo_name'] }}
       </div>
 
       <!-- <template v-if="getComputed.visibility">
